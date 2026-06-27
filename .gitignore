@@ -1,0 +1,29 @@
+# Visual Studio
+.user
+.vs/
+bin/
+obj/
+.suo
+.vscode/
+
+
+# Nuget Packages
+packages/
+!packages/build/
+*.nupkg
+
+
+# Publish Output
+publish/
+publishProfiles/
+
+
+#Temporary Files
+*.tmp
+*.temp
+*.cache
+
+
+#Environment Files
+.env
+.env.*
