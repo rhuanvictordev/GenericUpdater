@@ -7,7 +7,10 @@ namespace AtualizadorGenerico.ApiControllers
     [ApiController]
     public class UpdaterController : ControllerBase
     {
-
-
+        [HttpPost]
+        public void Baixar()
+        { 
+            
+        }
     }
 }

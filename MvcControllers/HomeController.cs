@@ -1,5 +1,6 @@
 using AtualizadorGenerico.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace AtualizadorGenerico.Controllers
@@ -22,21 +23,37 @@ namespace AtualizadorGenerico.Controllers
             foreach (var subpasta in subpastas)
             {
                 string caminhoManifest = Path.Combine(subpasta, "manifest.json");
-
-                if (File.Exists(caminhoManifest))
+                if (System.IO.File.Exists(caminhoManifest))
                 {
-                    string json = File.ReadAllText(caminhoManifest);
-
-                    var programa = JsonSerializer.Deserialize<Programa>(json);
-
-                    if (programa != null)
+                    string jsonManifest = System.IO.File.ReadAllText(caminhoManifest);
+                    Debug.WriteLine(jsonManifest);
+                    try
                     {
-                        programas.Add(programa);
+                        var programa = JsonSerializer.Deserialize<Programa>(jsonManifest);
+                        if (programa != null && programa.Nome != null && programa.Versao != null)
+                        {
+                            programas.Add(programa);
+                        }
+                        else
+                        {
+                            return View("Erro", jsonManifest);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return View("Erro", jsonManifest);
                     }
                 }
             }
 
             return View(programas);
+        }
+
+        
+        [HttpPost]
+        public JsonResult ObterVersaoAtual(string nomePrograma)
+        {
+            return null;
         }
     }
 }

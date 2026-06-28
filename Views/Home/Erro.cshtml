@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Erro";
+}
+@model string
+
+<div class="d-flex flex-column">
+
+    <div class="text-center mt-5">
+        <h1 class="display-5">Atualizador Genérico</h1>
+        <div class="text-center m-4">
+            <h4>Página de Erro</h4>
+        </div>
+    </div>
+
+
+    <div class="d-flex flex-column p-2 bg-dark gap-2 text-danger">
+        <h3 class="p-2">O sistema encontrou um erro ao tentar converter um manifest.json em um Objeto</h3>
+
+        <div>
+            <h6>Modelo esperado do "manifest.json" :</h6>
+            <p class="text-info">
+                <strong class="text-light">JSON</strong>
+                <br /><br />
+                {
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;"Nome":"ProgramaX",
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;"Versao":"1.0.2"
+                <br />
+                }
+            </p>
+        </div>
+
+        <div class="mt-4">
+            <h6>Modelo obtido" :</h6>
+            <p class="text-info">
+                <strong>@Model</strong>
+            </p>
+        </div>
+    </div>
+
+    <br />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" style="width:80px">Voltar</a>
+</div>
