@@ -49,6 +49,11 @@ namespace AtualizadorGenerico.Controllers
             return View(programas);
         }
 
+        public IActionResult Modelo()
+        {
+            return View();
+        }
+
         
         [HttpPost]
         public JsonResult ObterVersaoAtual(string nomePrograma)

@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Erro";
+}
+@model string
+
+<div class="d-flex flex-column">
+
+    <div class="text-center mt-5 p-3">
+        <h1 class="display-5">Atualizador Genérico</h1>
+    </div>
+
+    <h3 class="p-2">Como adicionar programas no atualizador ?</h3>
+    <div class="d-flex flex-column p-3 bg-dark gap-2 text-light">
+        
+
+        <div>
+            <h6>Siga o passo a passo abaixo:</h6>
+            <br /> 
+            <ol>
+                <li>Localize a pasta "Programas" dentro da aplicação no servidor IIS:  "IIS / DefaultWebSite / AtualizadorGenerico / Programas"</li>
+                <li>Crie uma nova pasta com o nome do programa que será atualizado (Não use espaços ou caracteres especiais)</li>
+                <li>Dentro dessa pasta, crie um arquivo chamado "manifest.json" com os seguintes corpo:</li>
+                <hr/>
+                <strong class="font-monospace text-info">
+                    {
+                    <br />"Nome":"ProgramaExemplo",
+
+                    <br />
+                    "Versao":"1.0"
+                    <br />
+                    }
+                </strong>
+                <hr />
+                <li>Substitua "ProgramaExemplo" e "1.0" pelos dados do programa</li>
+                <li>Adicione um arquivo compactado com a raiz do programa em um arquivo chamado "package.zip" na pasta criada no passo 2.</li>
+                <li>Configure o atualizador client para enviar a requisição POST com o nome do programa para o atualizador.</li>
+                <hr/>
+                @* <li>O atualizador devolverá um JSON contendo a seguinte estrutura:</li> *@
+
+            </ol>
+        </div>
+
+    </div>
+
+    <br />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" style="width:80px">Voltar</a>
+</div>
