@@ -28,10 +28,10 @@
                 @foreach (var programa in Model)
                 {
                     <tr class="text-center">
-                        <td class="w-75 text-start">@programa.Nome</td>
-                        <td>@programa.Versao</td>
+                        <td class="w-75 text-start">@programa.AppName</td>
+                        <td>@programa.Version</td>
                         <td>
-                            <a href="~/Home/Baixar/@programa.Nome" class="btn btn-success" style="text-decoration:none">Baixar</a>
+                            <a href="~/Home/Baixar/@programa.AppKeyName" class="btn btn-success" style="text-decoration:none">Baixar</a>
                         </td>
                     </tr>
                 }

@@ -2,15 +2,17 @@
 {
     public class Programa
     {
-        public string Nome { get; set; }
-        public string Versao { get; set; }
+        public string? AppName { get; set; }
+        public string AppKeyName { get; set; }
+        public string Version { get; set; }
 
         public Programa(){}
 
-        public Programa(string nome, string versao)
+        public Programa(string appName, string appKeyName, string version)
         {
-            this.Nome = nome;
-            this.Versao = versao;
+            AppName = appName;
+            AppKeyName = appKeyName;
+            Version = version;
         }
     }
 }
