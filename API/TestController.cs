@@ -6,7 +6,7 @@ using AtualizadorGenerico.Models.Request.TestPut;
 
 namespace AtualizadorGenerico.ApiControllers
 {
-    [ApiController]
+    /*[ApiController]
     [Route("/[controller]")]
     
     // com as anotacoes acima, o swagger irá documentar essa rota
@@ -74,13 +74,13 @@ namespace AtualizadorGenerico.ApiControllers
             return Ok(lista);
         }
 
-        /*// endpoint:  "/Test/lista2"
+        *//*// endpoint:  "/Test/lista2"
         [HttpDelete("lista2")]
         public IActionResult Delete()
         {
             List<string> lista = new List<string> { "D", "E", "F" };
             return Ok(lista);
-        }*/
+        }*//*
 
         
 
@@ -90,5 +90,5 @@ namespace AtualizadorGenerico.ApiControllers
         }
 
 
-    }
+    }*/
 }

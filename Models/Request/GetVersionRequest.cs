@@ -1,9 +1,10 @@
-﻿namespace AtualizadorGenerico.Models.Request
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AtualizadorGenerico.Models.Request
 {
     public class GetVersionRequest
     {
+        [Required]
         public string AppKeyName { get; set; }
-        public string Version { get; set; }
-
     }
 }

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using AtualizadorGenerico.Models;
 using AtualizadorGenerico.Models.Request;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Text.Json;
 
 namespace AtualizadorGenerico.ApiControllers
 {
     [ApiController]
-    [Route("/[controller]")]
+    [Route("CheckVersion")]
     
     // com as anotacoes acima, o swagger irá documentar essa rota
     // a rota desse controller sera definida assim: dominio:porta/nomeController (sem o nome controller)
@@ -15,35 +18,36 @@ namespace AtualizadorGenerico.ApiControllers
 
     public class UpdaterController : ControllerBase
     {
-        [HttpGet]
-        // endpoint:  "/Updater"
-        public IActionResult Get()
-        {
-            List<string> lista = new List<string>{"A","B","C"};
-            return Ok(lista);
-        }
+        private readonly string pasta = Path.Combine(AppContext.BaseDirectory, "Programas");
 
-        // endpoint:  "/Updater/lista2"
-        [HttpGet("lista2")]
-        public IActionResult Get2()
-        {
-            List<string> lista = new List<string> {"D","E","F"};
-            return Ok(lista);
-        }
-
-        // endpoint:  "/Updater"
         [HttpPost]
         public IActionResult EntregarVersaoAtual([FromBody] GetVersionRequest req)
         {
-            List<string> lista = new List<string> { "D", "E", "F" };
-            return Ok(req.AppKeyName);
-        }
+            try
+            {
+                string[] subpastas = Directory.GetDirectories(pasta);
+                foreach (var subpasta in subpastas)
+                {
+                    string manifest = Path.Combine(subpasta, "manifest.json");
+                    string jsonManifest = System.IO.File.ReadAllText(manifest);
+                    var programa = JsonSerializer.Deserialize<Programa>(jsonManifest);
+                    if (programa.AppKeyName != null && programa.AppKeyName == "")
+                    {
+                        return Ok(programa.Version);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new { mensagem = "Erro interno do servidor", erro = ex.Message });
+            }
 
-        [HttpGet("Download")]
-        public IActionResult Download() {
-            return Ok();
+            return StatusCode(404, new { mensagem = "Programa não encontrado" });
         }
-
 
     }
 }
