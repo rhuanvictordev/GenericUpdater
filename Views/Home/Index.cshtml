@@ -11,9 +11,9 @@
     </div>
 
 
-    <div class="d-flex flex-column p-2 bg-dark gap-2">
+    @* <div class="d-flex flex-column p-2 bg-dark gap-2">
         <input class="form-group w-100 bg-light" type="text" id="txtBusca" placeholder="Encontrar Programas" />
-     </div>
+     </div> *@
      @ViewBag.Title
     <div class="container mt-5">
         <table class="table table-striped table-hover">
@@ -31,7 +31,7 @@
                         <td class="w-75 text-start">@programa.AppName</td>
                         <td>@programa.Version</td>
                         <td>
-                            <a href="~/Home/Baixar/@programa.AppKeyName" class="btn btn-success" style="text-decoration:none">Baixar</a>
+                            <a href="~/Download/@programa.AppKeyName" class="btn btn-success" style="text-decoration:none">Baixar</a>
                         </td>
                     </tr>
                 }

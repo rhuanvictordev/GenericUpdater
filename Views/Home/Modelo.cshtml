@@ -18,7 +18,7 @@
             <br /> 
             <ol>
                 <li>Localize a pasta "Programas" dentro da aplicação no servidor IIS:  "IIS / DefaultWebSite / AtualizadorGenerico / Programas"</li>
-                <li>Crie uma nova pasta com o nome do programa que será atualizado (Não use espaços ou caracteres especiais)</li>
+                <li>Crie uma nova pasta com o nome do programa que será atualizado.</li>
                 <li>Dentro dessa pasta, crie um arquivo chamado "manifest.json" com o seguinte corpo:</li>
                 <hr/>
                 <strong class="font-monospace text-info">
@@ -31,9 +31,11 @@
                     }
                 </strong>
                 <hr />
-                <li>Substitua "ProgramaExemplo" e "1.0" pelos dados do programa</li>
+                <li>Substitua "ProgramaExemplo" e "1.0" pelos dados do programa.</li>
                 <li>Adicione um arquivo compactado com a raiz do programa em um arquivo chamado "package.zip" na pasta criada no passo 2.</li>
-                <li>Configure o atualizador client para enviar a requisição POST com o seguinte body:</li>
+                <li>Configure o Atualizador no cliente para enviar a requisição e baixar o programa.</li>
+                <li>Para lançar uma atualização, acesse o arquivo do manifest e altere <strong class="text-danger">APENAS</strong> o valor da chave Version.</li>
+                @* <li>Configure o atualizador client para enviar a requisição POST com o seguinte body:</li>
                 <hr />
                 <strong class="font-monospace text-info">
                     {
@@ -44,7 +46,7 @@
                 <hr />
                 <li>nome do programa para o atualizador.</li>
                 <hr/>
-                @* <li>O atualizador devolverá um JSON contendo a seguinte estrutura:</li> *@
+                <li>O atualizador devolverá um JSON contendo a seguinte estrutura:</li> *@
 
             </ol>
         </div>

@@ -16,27 +16,34 @@ namespace AtualizadorGenerico.Controllers
 
             foreach (var subpasta in subpastas)
             {
-                string caminhoManifest = Path.Combine(subpasta, "manifest.json");
-                if (System.IO.File.Exists(caminhoManifest))
+                string manifest = Path.Combine(subpasta, "manifest.json");
+                if (System.IO.File.Exists(manifest))
                 {
-                    string jsonManifest = System.IO.File.ReadAllText(caminhoManifest);
+                    string jsonManifest = System.IO.File.ReadAllText(manifest);
                     try
                     {
                         var programa = JsonSerializer.Deserialize<Programa>(jsonManifest);
-                        if (programa != null && programa.AppKeyName != null && programa.Version != null)
+                        if (programa != null)
                         {
-                            programa.AppName = Path.GetFileName(subpasta);
+                            string nomePasta = Path.GetFileName(subpasta);
+                            if (programa.Version == null || programa.Version == "" || programa.Version == String.Empty)
+                            {
+                                ViewBag.Header = "O sistema encontrou um erro";
+                                ViewBag.Body = $"Versão do programa: {nomePasta}, não definida no manifest: {jsonManifest}";
+                                return View("Erro");
+                            }
 
                             foreach (var item in programas)
                             {
                                 if (programa.AppKeyName.Equals(item.AppKeyName))
                                 {
-                                    ViewBag.Header = "O sistema encontrou um erro ao tentar converter um manifest.json em um Objeto";
-                                    ViewBag.Body = $"Foram encontrados 2 programas com os mesmos manifests: {jsonManifest}";
+                                    ViewBag.Header = "O sistema encontrou um erro";
+                                    ViewBag.Body = $"Foram encontrados 2 programas com os mesmos AppKeyName nos manifests: {jsonManifest}";
                                     return View("Erro");
                                 }
                             }
 
+                            programa.AppName = nomePasta;
                             programas.Add(programa);
                         }
                         else
@@ -47,8 +54,8 @@ namespace AtualizadorGenerico.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.Header = "O sistema encontrou um erro";
-                        ViewBag.Body = ex.Message;
+                        ViewBag.Header = $"Tentativa de leitura do Json falhou: {ex.Message}";
+                        ViewBag.Body = $"{jsonManifest}";
                         return View("Erro");
                     }
                 }
@@ -59,7 +66,6 @@ namespace AtualizadorGenerico.Controllers
 
         public IActionResult Modelo()
         {
-            Debug.WriteLine("AAAAAA");
             return View();
         }
 
