@@ -1,4 +1,7 @@
-﻿namespace AtualizadorGenerico.Models
+﻿using System.IO;
+using System.Text.Json;
+
+namespace AtualizadorGenerico.Models
 {
     public class Programa
     {
@@ -6,7 +9,7 @@
         public string AppKeyName { get; set; }
         public string Version { get; set; }
 
-        public Programa(){}
+        public Programa() { }
 
         public Programa(string appName, string appKeyName, string version)
         {
@@ -14,5 +17,6 @@
             AppKeyName = appKeyName;
             Version = version;
         }
+
     }
 }

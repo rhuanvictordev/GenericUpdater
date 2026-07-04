@@ -1,4 +1,5 @@
 using AtualizadorGenerico.Models;
+using AtualizadorGenerico.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
@@ -8,6 +9,7 @@ namespace AtualizadorGenerico.Controllers
     public class HomeController : Controller
     {
         private readonly string pasta = Path.Combine(AppContext.BaseDirectory, "Programas");
+        private ProgramaRepository programaRepository = new ProgramaRepository();
 
         public IActionResult Index()
         {
@@ -68,6 +70,18 @@ namespace AtualizadorGenerico.Controllers
         {
             return View();
         }
+
+
+        public IActionResult Atualizar(string appKeyName)
+        {
+            var programa = programaRepository.CarregarPrograma(appKeyName);
+            if (programa == null)
+                return NotFound();
+
+            return View(programa);
+        }
+
+
 
     }
 }

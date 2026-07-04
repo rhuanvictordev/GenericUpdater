@@ -8,20 +8,26 @@
 
   <ItemGroup>
     <Compile Remove="Arquivos\**" />
+    <Compile Remove="Models\Request\TestDelete\**" />
+    <Compile Remove="Models\Request\TestGet\**" />
+    <Compile Remove="Models\Request\TestPatch\**" />
     <Content Remove="Arquivos\**" />
+    <Content Remove="Models\Request\TestDelete\**" />
+    <Content Remove="Models\Request\TestGet\**" />
+    <Content Remove="Models\Request\TestPatch\**" />
     <EmbeddedResource Remove="Arquivos\**" />
+    <EmbeddedResource Remove="Models\Request\TestDelete\**" />
+    <EmbeddedResource Remove="Models\Request\TestGet\**" />
+    <EmbeddedResource Remove="Models\Request\TestPatch\**" />
     <None Remove="Arquivos\**" />
+    <None Remove="Models\Request\TestDelete\**" />
+    <None Remove="Models\Request\TestGet\**" />
+    <None Remove="Models\Request\TestPatch\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Request\TestDelete\" />
-    <Folder Include="Models\Request\TestPatch\" />
-    <Folder Include="Models\Request\TestGet\" />
   </ItemGroup>
 
 </Project>

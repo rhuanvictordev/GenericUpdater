@@ -20,6 +20,7 @@
             <thead class="table-dark">
                 <tr class="text-center">
                     <th>Nome do Programa</th>
+                    <th>Identificador</th>
                     <th>Versão Atual</th>
                     <th>Opções</th>
                 </tr>
@@ -28,10 +29,12 @@
                 @foreach (var programa in Model)
                 {
                     <tr class="text-center">
-                        <td class="w-75 text-start">@programa.AppName</td>
+                        <td class="text-start">@programa.AppName</td>
+                        <td>@programa.AppKeyName</td>
                         <td>@programa.Version</td>
                         <td>
-                            <a href="~/Download/@programa.AppKeyName" class="btn btn-success" style="text-decoration:none">Baixar</a>
+                            <a href="@Url.Action("Atualizar", "Home", new { AppKeyName = programa.AppKeyName })" class="btn btn-info">Atualizar</a>
+                            <a href="~/Download/@programa.AppKeyName" class="btn btn-success">Baixar</a>
                         </td>
                     </tr>
                 }

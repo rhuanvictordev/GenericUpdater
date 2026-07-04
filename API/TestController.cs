@@ -6,7 +6,9 @@ using AtualizadorGenerico.Models.Request.TestPut;
 
 namespace AtualizadorGenerico.ApiControllers
 {
-    /*[ApiController]
+    /*
+     
+    [ApiController]
     [Route("/[controller]")]
     
     // com as anotacoes acima, o swagger irá documentar essa rota
@@ -90,5 +92,7 @@ namespace AtualizadorGenerico.ApiControllers
         }
 
 
-    }*/
+    }
+    
+    */
 }
