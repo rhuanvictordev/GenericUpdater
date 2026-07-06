@@ -11,16 +11,16 @@
 
     <h3 class="p-2">Como adicionar programas no atualizador ?</h3>
     <div class="d-flex flex-column p-3 bg-dark gap-2 text-light">
-        
+
 
         <div>
             <h6>Siga o passo a passo abaixo:</h6>
-            <br /> 
+            <br />
             <ol>
                 <li>Localize a pasta "Programas" dentro da aplicação no servidor IIS:  "IIS / DefaultWebSite / AtualizadorGenerico / Programas"</li>
                 <li>Crie uma nova pasta com o nome do programa que será atualizado.</li>
                 <li>Dentro dessa pasta, crie um arquivo chamado "manifest.json" com o seguinte corpo:</li>
-                <hr/>
+                <hr />
                 <strong class="font-monospace text-info">
                     {
                     <br />"AppKeyName":"ProgramaExemplo",
@@ -31,23 +31,14 @@
                     }
                 </strong>
                 <hr />
-                <li>Substitua "ProgramaExemplo" e "1.0" pelos dados do programa.</li>
+                <li>
+                    Substitua "ProgramaExemplo" e "1.0" pelos dados do programa.
+                    <strong class="text-info">(o AppKeyName deve ser único para cada programa)</strong>
+                </li>
                 <li>Adicione um arquivo compactado com a raiz do programa em um arquivo chamado "package.zip" na pasta criada no passo 2.</li>
-                <li>Configure o Atualizador no cliente para enviar a requisição e baixar o programa.</li>
-                <li>Para lançar uma atualização, acesse o arquivo do manifest e altere <strong class="text-danger">APENAS</strong> o valor da chave Version.</li>
-                @* <li>Configure o atualizador client para enviar a requisição POST com o seguinte body:</li>
-                <hr />
-                <strong class="font-monospace text-info">
-                    {
-                    <br />"AppKeyName":"ProgramaExemplo"
-                    <br />
-                    }
-                </strong>
-                <hr />
-                <li>nome do programa para o atualizador.</li>
-                <hr/>
-                <li>O atualizador devolverá um JSON contendo a seguinte estrutura:</li> *@
-
+                <li>
+                    Configure o Atualizador Client para atualizar o programa.
+                </li>
             </ol>
         </div>
 

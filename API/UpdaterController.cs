@@ -90,22 +90,20 @@ namespace AtualizadorGenerico.ApiControllers
 
 
 
+        /*[RequestFormLimits(MultipartBodyLengthLimit = 1024L * 1024 * 1024)]
+        [RequestSizeLimit(1024L * 1024 * 1024)]*/
         [HttpPost("Upload")]
-        public async Task<IActionResult> Upload(IFormFile arquivo, [FromBody] UploadViewModel model)
+        public async Task<IActionResult> Upload([FromForm] UploadViewModel? model)
         {
-            if (arquivo == null || arquivo.Length == 0)
+            if (model.Arquivo == null || model.Arquivo.Length == 0)
                 return BadRequest("Nenhum arquivo enviado.");
 
-
-            var pasta = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
-
-            Directory.CreateDirectory(pasta);
-
-            var caminho = Path.Combine(pasta, arquivo.FileName);
+            var pasta = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName);
+            var caminho = Path.Combine(pasta, "packagea.zip");
 
             using (var stream = new FileStream(caminho, FileMode.Create))
             {
-                await arquivo.CopyToAsync(stream);
+                await model.Arquivo.CopyToAsync(stream);
             }
 
             return Ok("Arquivo salvo.");

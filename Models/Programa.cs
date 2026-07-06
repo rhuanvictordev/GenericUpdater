@@ -5,7 +5,7 @@ namespace AtualizadorGenerico.Models
 {
     public class Programa
     {
-        public string? AppName { get; set; }
+        public string AppName { get; set; }
         public string AppKeyName { get; set; }
         public string Version { get; set; }
 
@@ -18,17 +18,24 @@ namespace AtualizadorGenerico.Models
             Version = version;
         }
 
-        public string obterNovaVersao()
+        public string ObterNovaVersao()
         {
-            try
+            string hoje = DateTime.Now.ToString("dd.MM.yyyy");
+
+            if (!Version.StartsWith(hoje))
             {
-                var versaoDouble = double.Parse(this.Version);
-                return (versaoDouble + 1).ToString();
+                return hoje;
             }
-            catch (Exception ex)
+
+            if (!Version.Contains('-'))
             {
-                return "";
+                return $"{hoje}-2";
             }
+
+            string[] partes = Version.Split('-');
+            int numero = int.Parse(partes[1]);
+
+            return $"{hoje}-{numero+1}";
         }
 
     }

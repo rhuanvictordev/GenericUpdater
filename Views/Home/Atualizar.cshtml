@@ -15,17 +15,16 @@
 
         <div class="card-body">
 
-            <form asp-controller="Updater" asp-action="Upload" method="post" enctype="multipart/form-data">
+            <form id="formUpload" asp-controller="Updater" asp-action="Upload" method="post" enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label class="form-label">Nome</label>
-                    <input class="form-control" value="@Model.Programa.AppName" readonly />
+                    <input class="form-control" asp-for="Programa.AppName" readonly />
                 </div>
-                <input asp-for="Programa.AppKeyName" type="hidden" />
-
+                
                 <div class="mb-3">
                     <label class="form-label">Identificador</label>
-                    <input class="form-control" value="@Model.Programa.AppKeyName" readonly />
+                    <input class="form-control" asp-for="Programa.AppKeyName" readonly />
                 </div>
 
                 <div class="d-flex flex-row gap-3 justify-content-center text-start">
@@ -35,7 +34,7 @@
                     </div>
                     <div>
                         <p>Nova Versão:</p>
-                        <input class="form-control" value="@Model.Programa.obterNovaVersao()" readonly />
+                        <input id="Version" class="form-control" asp-for="Programa.Version"  value="@Model.Programa.ObterNovaVersao()" readonly />
                     </div>
                 </div>
 
@@ -44,7 +43,13 @@
                     <input type="file" name="arquivo" class="form-control" accept=".zip" required />
                 </div>
 
-                <button type="submit" class="btn btn-success">Publicar Atualização</button>
+                <div class="progress mb-4" style="display:block;" id="divProgress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width:1%;"> 0% </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Publicar Atualização</button>
+                </div>
 
             </form>
 
@@ -53,3 +58,53 @@
     </div>
 
 </div>
+
+
+@section Scripts {
+<script>
+    $(function () {
+        
+
+        $("#formUpload").on("submit", function (e) {
+            e.preventDefault();
+
+            var form = this;
+            var formData = new FormData(form);
+
+            $("#divProgress").show();
+            $("#progressBar").css("width", "14%").text("14%");
+
+            $.ajax({
+            url: $(form).attr("action"),
+            type: "POST",
+            data: formData,
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (e) {
+                    if (e.lengthComputable) {
+                        var porcentagem = Math.round((e.loaded * 100) / e.total);
+                        $("#progressBar").css("width", porcentagem + "%").text(porcentagem + "%")
+                    }
+                });
+            return xhr;
+            },
+        
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                alert("Upload concluído!");
+                
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000);
+            },
+            error: function (xhr) {
+                alert(xhr.responseText);
+            }
+            });
+        });
+
+    });
+</script>
+}

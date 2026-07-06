@@ -1,5 +1,6 @@
 using AtualizadorGenerico.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace AtualizadorGenerico
 {
@@ -13,6 +14,7 @@ namespace AtualizadorGenerico
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            //builder.Services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 1L * 1024 * 1024 * 1024; });
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
