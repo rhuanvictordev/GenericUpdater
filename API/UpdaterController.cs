@@ -1,5 +1,6 @@
 ﻿using AtualizadorGenerico.Models;
 using AtualizadorGenerico.Models.Request;
+using AtualizadorGenerico.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Text.Json;
 namespace AtualizadorGenerico.ApiControllers
 {
     [ApiController]
-    [Route("CheckVersion")]
+    //[Route("CheckVersion")]
 
     // com as anotacoes acima, o swagger irá documentar essa rota
     // a rota desse controller sera definida assim: dominio:porta/nomeController (sem o nome controller)
@@ -19,8 +20,9 @@ namespace AtualizadorGenerico.ApiControllers
     public class UpdaterController : ControllerBase
     {
         private readonly string pasta = Path.Combine(AppContext.BaseDirectory, "Programas");
+        private readonly ProgramaRepository programaRepository = new ProgramaRepository();
 
-        [HttpPost]
+        [HttpPost("CheckVersion")]
         public IActionResult EntregarVersaoAtual([FromBody] GetVersionRequest req)
         {
             try
@@ -89,15 +91,13 @@ namespace AtualizadorGenerico.ApiControllers
 
 
         [HttpPost("Upload")]
-        public async Task<IActionResult> Upload(IFormFile arquivo)
+        public async Task<IActionResult> Upload(IFormFile arquivo, [FromBody] UploadViewModel model)
         {
             if (arquivo == null || arquivo.Length == 0)
                 return BadRequest("Nenhum arquivo enviado.");
 
-            var pasta = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "Uploads"
-            );
+
+            var pasta = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 
             Directory.CreateDirectory(pasta);
 

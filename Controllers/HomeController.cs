@@ -78,7 +78,10 @@ namespace AtualizadorGenerico.Controllers
             if (programa == null)
                 return NotFound();
 
-            return View(programa);
+            UploadViewModel upModel = new UploadViewModel();
+            upModel.Programa = programa;
+
+            return View(upModel);
         }
 
 

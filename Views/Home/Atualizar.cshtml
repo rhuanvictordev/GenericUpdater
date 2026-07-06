@@ -1,4 +1,4 @@
-﻿@model Programa
+﻿@model UploadViewModel
 
 <div class="container mt-5">
 
@@ -10,50 +10,41 @@
 
         <div class="card-header d-flex justify-content-between">
             <h4 class="mb-0">Atualizar Programa</h4>
-            <strong>@Model.AppName</strong>
+            <strong>@Model.Programa.AppName</strong>
         </div>
 
         <div class="card-body">
 
-            <form asp-controller="Updater"
-                  asp-action="Upload"
-                  asp-route-appKeyName="@Model.AppKeyName"
-                  method="post"
-                  enctype="multipart/form-data">
+            <form asp-controller="Updater" asp-action="Upload" method="post" enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label class="form-label">Nome</label>
-                    <input class="form-control"
-                           value="@Model.AppName"
-                           readonly />
+                    <input class="form-control" value="@Model.Programa.AppName" readonly />
                 </div>
+                <input asp-for="Programa.AppKeyName" type="hidden" />
 
                 <div class="mb-3">
                     <label class="form-label">Identificador</label>
-                    <input class="form-control"
-                           value="@Model.AppKeyName"
-                           readonly />
+                    <input class="form-control" value="@Model.Programa.AppKeyName" readonly />
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Versão Atual</label>
-                    <input class="form-control"
-                           value="@Model.Version"
-                           readonly />
+                <div class="d-flex flex-row gap-3 justify-content-center text-start">
+                    <div>
+                        <p>Versão Atual:</p>
+                        <input class="form-control" value="@Model.Programa.Version" readonly />
+                    </div>
+                    <div>
+                        <p>Nova Versão:</p>
+                        <input class="form-control" value="@Model.Programa.obterNovaVersao()" readonly />
+                    </div>
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Arquivo (.zip)</label>
-                    <input type="file"
-                           name="arquivo"
-                           class="form-control"
-                           accept=".zip"
-                           required />
+                    <input type="file" name="arquivo" class="form-control" accept=".zip" required />
                 </div>
 
-                <button type="submit" class="btn btn-success">
-                    Publicar Atualização
-                </button>
+                <button type="submit" class="btn btn-success">Publicar Atualização</button>
 
             </form>
 

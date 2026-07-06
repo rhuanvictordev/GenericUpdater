@@ -18,5 +18,18 @@ namespace AtualizadorGenerico.Models
             Version = version;
         }
 
+        public string obterNovaVersao()
+        {
+            try
+            {
+                var versaoDouble = double.Parse(this.Version);
+                return (versaoDouble + 1).ToString();
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
     }
 }
