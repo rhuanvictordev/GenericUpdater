@@ -8,7 +8,7 @@ namespace AtualizadorGenerico.Models
         public string AppName { get; set; }
         public string AppKeyName { get; set; }
         public string Version { get; set; }
-
+        
         public Programa() { }
 
         public Programa(string appName, string appKeyName, string version)

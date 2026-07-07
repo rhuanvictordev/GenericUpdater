@@ -90,22 +90,43 @@ namespace AtualizadorGenerico.ApiControllers
 
 
 
-        /*[RequestFormLimits(MultipartBodyLengthLimit = 1024L * 1024 * 1024)]
-        [RequestSizeLimit(1024L * 1024 * 1024)]*/
+        [RequestFormLimits(MultipartBodyLengthLimit = 1024L * 1024 * 1024)] // limitando a 1gb
+        [RequestSizeLimit(1024L * 1024 * 1024)] // limitando a 1gb
         [HttpPost("Upload")]
         public async Task<IActionResult> Upload([FromForm] UploadViewModel? model)
         {
             if (model.Arquivo == null || model.Arquivo.Length == 0)
                 return BadRequest("Nenhum arquivo enviado.");
 
+            Programa programaOld = programaRepository.CarregarPrograma(model.Programa.AppKeyName);
+
+            try
+            {
+                var raizPrograma = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName);
+                var packageOld = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName, "package.zip");
+                var pastaProgramaOld = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName, "old_versions");
+
+                //if (System.IO.Directory.Exists(pastaProgramaOld)){}
+                Directory.CreateDirectory(pastaProgramaOld);
+                
+                var packageBackup = Path.Combine(pastaProgramaOld, $"{programaOld.Version}_backup.zip");
+                System.IO.File.Copy(packageOld, packageBackup, true);
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
             var pasta = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName);
-            var caminho = Path.Combine(pasta, "packagea.zip");
+            var caminho = Path.Combine(pasta, "package.zip");
 
             using (var stream = new FileStream(caminho, FileMode.Create))
             {
                 await model.Arquivo.CopyToAsync(stream);
             }
 
+            programaRepository.AtualizarManifest(model.Programa.AppKeyName, programaOld.ObterNovaVersao());
             return Ok("Arquivo salvo.");
         }
     }
