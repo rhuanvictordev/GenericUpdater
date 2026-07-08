@@ -10,10 +10,10 @@
 </head>
 <body class="bg-light">
     <div class="bg-dark w-100 text-center gap-2 p-2 d-flex">
-        <a class="btn btn-primary" href="/Home">Inicio</a>
-        <a class="btn btn-primary" href="~/Home/Modelo">Adicionar Programas</a>
+        <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Início</a>
+        <a class="btn btn-primary" href="@Url.Action("Modelo", "Home")">Adicionar Programas</a>
         <a class="btn btn-secondary text-light" href="/">Logs</a>
-        <a class="btn btn-secondary" href="~/swagger">Swagger</a>
+        <a class="btn btn-primary" href="@Url.Content("~/swagger")">Swagger</a>
     </div>
     
     <div class="container">
