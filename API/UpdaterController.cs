@@ -99,6 +99,7 @@ namespace AtualizadorGenerico.ApiControllers
                 return BadRequest("Nenhum arquivo enviado.");
 
             Programa programaOld = programaRepository.CarregarPrograma(model.Programa.AppKeyName);
+            bool fileBackupSaved = false;
 
             try
             {
@@ -108,10 +109,16 @@ namespace AtualizadorGenerico.ApiControllers
 
                 //if (System.IO.Directory.Exists(pastaProgramaOld)){}
                 Directory.CreateDirectory(pastaProgramaOld);
-                
+
                 var packageBackup = Path.Combine(pastaProgramaOld, $"{programaOld.Version}_backup.zip");
                 System.IO.File.Copy(packageOld, packageBackup, true);
-                
+                fileBackupSaved = true;
+
+            }
+            catch (FileNotFoundException ex)
+            {
+                //return StatusCode(500, "Arquivo package.zip não localizado no servidor. Insira manualmente um package.zip antes de tentar atualizar!");
+                fileBackupSaved = false;
             }
             catch (Exception ex)
             {
@@ -127,7 +134,15 @@ namespace AtualizadorGenerico.ApiControllers
             }
 
             programaRepository.AtualizarManifest(model.Programa.AppKeyName, programaOld.ObterNovaVersao());
-            return Ok("Arquivo salvo.");
+
+            if (fileBackupSaved)
+            {
+                return Ok("Programa atualizado e o backup da versão anterior foi salvo.");
+            }
+            else
+            {
+                return Ok("Programa atualizado, backup não localizado");
+            }
         }
     }
 }

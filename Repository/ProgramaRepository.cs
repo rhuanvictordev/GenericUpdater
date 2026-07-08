@@ -38,7 +38,13 @@ namespace AtualizadorGenerico.Repository
                     if (programa.AppKeyName == appKeyName)
                     {
                         programa.Version = novaVersao;
-                        string novoJson = JsonSerializer.Serialize(programa, new JsonSerializerOptions { WriteIndented = true });
+                        programa.AppName = Path.GetFileName(subpasta);
+
+                        var obj = new { AppKeyName = appKeyName, Version = novaVersao };
+                        
+                        //string novoJson = JsonSerializer.Serialize(programa, new JsonSerializerOptions { WriteIndented = true });
+                        string novoJson = JsonSerializer.Serialize(obj, new JsonSerializerOptions { WriteIndented = true });
+                        
                         System.IO.File.WriteAllText(manifest, novoJson);
                         return true;
                     }
