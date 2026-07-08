@@ -17,14 +17,17 @@ namespace AtualizadorGenerico
             //builder.Services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 1L * 1024 * 1024 * 1024; });
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
+            /*if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 app.UseExceptionHandler("/Home/Erro");
                 app.UseHsts();
-            }
+            }*/
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
