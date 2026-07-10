@@ -105,7 +105,6 @@ namespace Updater
             this.Name = "Atualizador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Atualizador";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Atualizador_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
