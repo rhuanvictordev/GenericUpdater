@@ -11,61 +11,104 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Updater.Model;
 
 namespace Updater
 {
     public partial class Atualizador : Form
     {
         private readonly HttpClient _httpClient;
-        private string AppName = ConfigurationManager.AppSettings["AppName"];
-        private string AppKeyName = ConfigurationManager.AppSettings["AppKeyName"];
-        private string AppVersion = ConfigurationManager.AppSettings["AppVersion"];
-        private string ServerUrl = ConfigurationManager.AppSettings["BaseApiUrl"];
+        private Programa _programa;
 
-        public Atualizador(HttpClient httpClient)
+        public Atualizador()
         {
+            _httpClient = new HttpClient();
+            _programa = new Programa();
             InitializeComponent();
-            _httpClient = httpClient;
+            CarregaInformacoes();
             notificarUI("Consultando Servidor", "Verificando Atualização");
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public void CarregaInformacoes()
+        {
+            try
+            {
+                string raizAplicacao = AppContext.BaseDirectory;
+                string arquivoConfigJson = Path.Combine(raizAplicacao, "config.json");
+
+                if (!File.Exists(arquivoConfigJson))
+                {
+                    throw new Exception("Arquivo de configuração não encontrado");
+                }
+                var conteudo = File.ReadAllText(arquivoConfigJson);
+                var programa = JsonConvert.DeserializeObject<Programa>(conteudo);
+                if (programa != null)
+                {
+                    _programa = programa;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro", ex.Message);
+                Application.Exit();
+            }
+        }
+
 
         public void notificarUI(string logMessage, string infoMessage)
         {
             lblLog.Text = !logMessage.Equals(String.Empty) ? $"{logMessage}..." : lblLog.Text;
             lblInfo.Text = !infoMessage.Equals(String.Empty) ? infoMessage : lblInfo.Text;
         }
+        
+
 
         private async void Atualizador_Load(object sender, EventArgs e)
         {
-            lblNomeSistema.Text = $"{AppName}   [ Atualizador ]";
-            string versaoRecebida = await VerificarVersaoAtual(ServerUrl, AppKeyName);
+            lblNomeSistema.Text = $"{_programa.AppName}   [ Atualizador ]";
+            string versaoRecebida = await VerificarVersaoAtual(_programa.BaseApiURL, _programa.AppKeyName);
 
-            if (!versaoRecebida.Equals(String.Empty))
-            {
-                notificarUI("", $"Sucesso! {versaoRecebida}");
-            }
-            else 
-            {
-                notificarUI("", "Servidor Indisponível");
-            }
+            MessageBox.Show(versaoRecebida);
         }
 
-        private async Task<string> VerificarVersaoAtual(string serverUrl, string appKeyName)
+        private async Task<string> VerificarVersaoAtual(string baseUrl, string appKeyName)
         {
             try
             {
                 Object requestBody = new { appKeyName = appKeyName };
                 string json = JsonConvert.SerializeObject(requestBody);
-                
+
                 HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync($"{serverUrl}/CheckVersion", content);
+                var response = await _httpClient.PostAsync($"{baseUrl}/CheckVersion", content);
 
                 return await response.Content.ReadAsStringAsync();
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return String.Empty;
+                return "Erro do catch";
             }
         }
 

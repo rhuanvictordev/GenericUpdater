@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Updater.Model;
 
 namespace Updater
 {
@@ -14,7 +15,7 @@ namespace Updater
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Atualizador(new HttpClient()));
+            Application.Run(new Atualizador());
         }
     }
 }
