@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Updater.Model;
+using Updater.Service;
 
 namespace Updater
 {
@@ -15,6 +16,7 @@ namespace Updater
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            CriarArquivoConfig.CriarArquivo();
             Application.Run(new Atualizador());
         }
     }

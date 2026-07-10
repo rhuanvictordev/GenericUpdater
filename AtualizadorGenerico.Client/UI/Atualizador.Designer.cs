@@ -33,6 +33,7 @@ namespace Updater
             this.lblInfo = new System.Windows.Forms.Label();
             this.btnExecutar = new System.Windows.Forms.Button();
             this.lblLog = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // lblNomeSistema
@@ -80,12 +81,21 @@ namespace Updater
             this.lblLog.Text = "Log do sistema";
             this.lblLog.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(54, 243);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(313, 30);
+            this.progressBar1.TabIndex = 2;
+            this.progressBar1.Visible = false;
+            // 
             // Atualizador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
             this.ClientSize = new System.Drawing.Size(420, 415);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnExecutar);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.lblLog);
@@ -108,6 +118,7 @@ namespace Updater
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.Button btnExecutar;
         private System.Windows.Forms.Label lblLog;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

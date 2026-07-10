@@ -12,5 +12,17 @@ namespace Updater.Model
         public string AppKeyName { get; set; }
         public string AppVersion { get; set; }
         public string BaseApiURL { get; set; }
+        public string ExeName { get; set; }
+
+        public Programa() { }
+
+        public Programa(string appName, string appKeyName, string appVersion, string baseApiURL, string exeName)
+        {
+            AppName = appName;
+            AppKeyName = appKeyName;
+            AppVersion = appVersion;
+            BaseApiURL = baseApiURL;
+            ExeName = exeName;
+        }
     }
 }
