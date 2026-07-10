@@ -84,6 +84,15 @@ namespace AtualizadorGenerico.Controllers
             return View(upModel);
         }
 
+        public IActionResult AdicionarPrograma()
+        {
+            Programa p = new Programa();
+            UploadViewModel upModel = new UploadViewModel();
+            upModel.Programa = p;
+            upModel.Programa.Version = DateTime.Now.ToString("dd.MM.yyyy");
+            return View(upModel);
+        }
+
 
 
     }

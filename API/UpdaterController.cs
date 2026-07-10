@@ -144,5 +144,60 @@ namespace AtualizadorGenerico.ApiControllers
                 return Ok("Programa atualizado, backup não localizado");
             }
         }
+
+
+
+        [RequestFormLimits(MultipartBodyLengthLimit = 1024L * 1024 * 1024)] // limitando a 1gb
+        [RequestSizeLimit(1024L * 1024 * 1024)] // limitando a 1gb
+        [HttpPost("UploadNewProgram")]
+        public async Task<IActionResult> UploadNewProgram([FromForm] UploadViewModel model)
+        {
+            if (model.Arquivo == null || model.Arquivo.Length == 0)
+                return BadRequest("Nenhum arquivo enviado.");
+
+            Programa programa = programaRepository.CarregarPrograma(model.Programa.AppKeyName);
+            if (programa != null)
+            {
+                return BadRequest("Nome Chave já existe em outro programa.");
+            }
+
+            try
+            {
+                var raizPrograma = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName);
+                Directory.CreateDirectory(raizPrograma);
+
+                string novoManifest = Path.Combine(raizPrograma, "manifest.json");
+
+                var obj = new { AppKeyName = model.Programa.AppKeyName.Replace(" ","").Trim(), Version = model.Programa.Version };
+
+                string novoJson = JsonSerializer.Serialize(obj, new JsonSerializerOptions { WriteIndented = true });
+                System.IO.File.WriteAllText(novoManifest, novoJson);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+
+            var pasta = Path.Combine(AppContext.BaseDirectory, "Programas", model.Programa.AppName);
+            var caminho = Path.Combine(pasta, "package.zip");
+
+            using (var stream = new FileStream(caminho, FileMode.Create))
+            {
+                await model.Arquivo.CopyToAsync(stream);
+            }
+
+            return Ok("Programa salvo");
+        }
     }
+
+
+
+
+
+
+
+
+
+
 }

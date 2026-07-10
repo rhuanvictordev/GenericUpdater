@@ -43,7 +43,7 @@
                     <input type="file" name="arquivo" class="form-control" accept=".zip" required />
                 </div>
 
-                <div class="progress mb-4" style="display:block;" id="divProgress">
+                <div class="progress mb-4" style="display:none;" id="divProgress">
                     <div id="progressBar" class="progress-bar" role="progressbar" style="width:1%;"> 0% </div>
                 </div>
 
@@ -93,10 +93,10 @@
             contentType: false,
 
             success: function (response) {
-                alert("Upload concluído!");
+                alert("Programa atualizado!");
                 
                 setTimeout(() => {
-                    window.location.href = "/";
+                        window.location.href = '@Url.Action("Index", "Home")';
                 }, 1000);
             },
             error: function (xhr) {

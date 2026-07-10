@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Início - Atualizador Genérico";
+}
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atualizador Genérico</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AtualizadorGenerico.styles.css" asp-append-version="true" />
@@ -11,8 +14,9 @@
 <body class="bg-light">
     <div class="bg-dark w-100 text-center gap-2 p-2 d-flex">
         <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Início</a>
-        <a class="btn btn-primary" href="@Url.Action("Modelo", "Home")">Adicionar Programas</a>
-        <a class="btn btn-secondary text-light" href="/">Logs</a>
+        @* <a class="btn btn-primary" href="@Url.Action("Modelo", "Home")">App Modelo</a> *@
+        <a class="btn btn-primary" href="@Url.Action("AdicionarPrograma", "Home")">Adicionar Programa</a>
+        @* <a class="btn btn-secondary text-light" href="/">Logs</a> *@
         <a class="btn btn-primary" href="@Url.Content("~/swagger")">Swagger</a>
     </div>
     
